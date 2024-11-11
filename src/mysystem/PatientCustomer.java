@@ -10,18 +10,18 @@ public class PatientCustomer {
     public void patientInfo() {
         String response;
         do {
-            System.out.println("====================================|");
-            System.out.println("                                    |");
-            System.out.println("     PATIENT MANAGEMENT SYSTEM      |");
-            System.out.println("                                    |");
-            System.out.println("====================================|");
-            System.out.println("1.        ADD PATIENT               |");
-            System.out.println("2.      VIEW ALL PATIENTS           |");
-            System.out.println("3.       UPDATE PATIENT             |");
-            System.out.println("4.       DELETE PATIENT             |");
-            System.out.println("5.           EXIT                   |");
-            System.out.println("====================================|");
-            System.out.print("ENTER (1-5) ONLY ! :"); 
+            System.out.println("|====================================|");
+            System.out.println("|                                    |");
+            System.out.println("|     PATIENTS MANAGEMENT SYSTEM     |");
+            System.out.println("|                                    |");
+            System.out.println("|====================================|");
+            System.out.println("|1.        ADD PATIENT DETAILS       |");
+            System.out.println("|2.          VIEW DETAILS            |");
+            System.out.println("|3.         UPDATE DETAILS           |");
+            System.out.println("|4.         DELETE DETAILS           |");
+            System.out.println("|5.            EXIT                  |");
+            System.out.println("|====================================|");
+            System.out.print("\tCHOOSE A NUMBER (1-5) :");
 
             int action = getValidAction(1, 5);
 
@@ -43,9 +43,9 @@ public class PatientCustomer {
                     viewPatients();
                     break;
                 case 5:
-                    return; 
+                    return;
                 default:
-                    System.out.println("Invalid action. Please select a valid option.");
+                    System.out.print("Invalid action. Please select a valid option. :");
                     break;
             }
 
@@ -53,7 +53,7 @@ public class PatientCustomer {
                 System.out.print("Do you want to perform another action? (yes/no): ");
                 response = sc.nextLine().toLowerCase();
                 if (response.equals("yes") || response.equals("no")) {
-                    break; 
+                    break;
                 } else {
                     System.out.println("Invalid input. Please enter 'yes' or 'no' only.");
                 }
@@ -69,70 +69,103 @@ public class PatientCustomer {
         String firstName = sc.nextLine();
         System.out.print("Patient Last Name: ");
         String lastName = sc.nextLine();
-        String address = getAddress(); 
-        String contactNo = getContactNumber(); 
-        int age = getValidInteger("Patient Age: ", 0, 120); 
-        System.out.print("Patient Email: ");
-        String email = sc.nextLine(); 
+        String address = getAddress();
+        String contactNo = getContactNumber();
+        int age = getValidInteger("Patient Age: ", 0, 120);
         System.out.print("Patient Gender: ");
-        String gender = sc.nextLine(); 
-        
+        String gender = sc.nextLine();
+        System.out.print("Patient Email: ");
+        String email = sc.nextLine();
+
         String inOutStatus = getInOutStatus();
 
-        String sql = "INSERT INTO tbl_patient (First_Name, Last_Name, Age, Gender,Address, Contact_No, Email, InOutStatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        conf.addRecords(sql, firstName, lastName, address, contactNo, age, email, gender, inOutStatus);
-        System.out.println("Patient added successfully!"); 
+        String sql = "INSERT INTO tbl_patient (First_Name, Last_Name, Address, Contact_No, Age, Gender, Email, InOutStatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        conf.addRecords(sql, firstName, lastName, address, contactNo, age, gender, email, inOutStatus);
+        System.out.println("Patient added successfully!");
     }
 
     public void viewPatients() {
         String qry = "SELECT * FROM tbl_patient";
-        String[] hdrs = {"Patient ID", "First Name", "Last Name", "Age", "Gender","Address", "Contact No", "Email", "In/Out Status"};
-        String[] clmn = {"patient_id", "First_Name", "Last_Name", "Age", "Gender","Address", "Contact_No", "Email", "InOutStatus"};
-        conf.viewRecords(qry, hdrs, clmn); 
+        String[] hdrs = {"PATIENT ID", "FIRST NAME", "LAST NAME", "ADDRESS", "CONTACT NUMBER", "AGE", "GENDER", "EMAIL ACCOUNT", "IN / OUT STATUS"};
+        String[] clmn = {"patient_id", "First_Name", "Last_Name", "Address", "Contact_No", "Age", "Gender", "Email", "InOutStatus"};
+        conf.viewRecords(qry, hdrs, clmn);
     }
 
-    public void updatePatient() {
-        int patientId = getValidInteger("Enter Patient ID to Update: ", 1, Integer.MAX_VALUE);
+   public void updatePatient() {
+    try {
+        System.out.println("Enter Patient ID to Update:");
+        int patientId = Integer.parseInt(sc.nextLine());
+        
+        String checkQuery = "SELECT patient_id FROM tbl_patient WHERE patient_id = ?";
+        while (!conf.checkIfExists(checkQuery, patientId)) {
+            System.out.println("Patient ID not found! Please enter a valid Patient ID:");
+            patientId = Integer.parseInt(sc.nextLine()); 
+        }
+
         System.out.print("New First Name: ");
-        String firstName = sc.nextLine();
+        String firstName = sc.nextLine().trim();
+        while (firstName.isEmpty()) {
+            System.out.print("First Name cannot be empty. Please enter a valid First Name: ");
+            firstName = sc.nextLine().trim();
+        }
+
         System.out.print("New Last Name: ");
-        String lastName = sc.nextLine();
-        int age = getValidInteger("New Age: ", 0, 120); 
+        String lastName = sc.nextLine().trim();
+        while (lastName.isEmpty()) {
+            System.out.print("Last Name cannot be empty. Please enter a valid Last Name: ");
+            lastName = sc.nextLine().trim();
+        }
+
+        System.out.print("New Address: ");
+        String address = sc.nextLine();
+        System.out.print("New Contact Number: ");
+        String contactNo = sc.nextLine();
+        int age = getValidInteger("New Age: ", 0, 120);
         System.out.print("New Gender: ");
         String gender = sc.nextLine();
-        System.out.print("New Address : ");
-        String address = sc.nextLine();
-        System.out.print("New Contact Number : ");
-        String contactNo = sc.nextLine();
         System.out.print("New Email: ");
         String email = sc.nextLine();
-        
         String inOutStatus = getInOutStatus();
 
-        String qry = "UPDATE tbl_patient SET First_Name = ?, Last_Name = ?, Age = ?, Gender = ?, Address = ?, Contact_No = ?, Email = ?, InOutStatus = ? WHERE patient_id = ?";
-        conf.updateRecords(qry, firstName, lastName, age, gender, address, contactNo, email, inOutStatus, patientId); 
-        System.out.println("Patient updated successfully!"); 
+        String qry = "UPDATE tbl_patient SET First_Name = ?, Last_Name = ?, Address = ?, Contact_No = ?, Age = ?, Gender = ?, Email = ?, InOutStatus = ? WHERE patient_id = ?";
+        conf.updateRecords(qry, firstName, lastName, address, contactNo, age, gender, email, inOutStatus, patientId);
+        System.out.println("Patient updated successfully!");
+    } catch (Exception e) {
+        System.err.println("Error updating patient: " + e.getMessage());
     }
+}
 
-    public void deletePatient() {
-        int patientId = getValidInteger("Enter Patient ID to delete: ", 1, Integer.MAX_VALUE); 
+
+public void deletePatient() {
+    try {
+        int patientId = getValidInteger("Enter Patient ID to delete: ", 1, Integer.MAX_VALUE);
+        String checkQuery = "SELECT patient_id FROM tbl_patient WHERE patient_id = ?";
+        while (!conf.checkIfExists(checkQuery, patientId)) {
+            System.out.println("Warning: Patient ID not found. Please enter a valid Patient ID.");
+            patientId = getValidInteger("Enter Patient ID to delete: ", 1, Integer.MAX_VALUE);
+        }
         String qry = "DELETE FROM tbl_patient WHERE patient_id = ?";
-        conf.deleteRecords(qry, patientId); 
+        conf.deleteRecords(qry, patientId);
         System.out.println("Patient deleted successfully!");
+
+    } catch (Exception e) {
+        System.err.println("Error deleting patient: " + e.getMessage());
     }
+}
+
 
     private int getValidAction(int min, int max) {
         int action = -1;
         while (action < min || action > max) {
             try {
                 action = sc.nextInt();
-                sc.nextLine(); 
+                sc.nextLine();
                 if (action < min || action > max) {
                     System.out.println("Invalid option. Please enter a number between " + min + " and " + max + ".");
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a number.");
-                sc.nextLine(); 
+                sc.nextLine();
             }
         }
         return action;
@@ -144,13 +177,13 @@ public class PatientCustomer {
             System.out.print(prompt);
             try {
                 value = sc.nextInt();
-                sc.nextLine(); 
+                sc.nextLine();
                 if (value < min || value > max) {
                     System.out.println("Invalid input. Please enter a number between " + min + " and " + max + ".");
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a valid integer.");
-                sc.nextLine(); 
+                sc.nextLine();
             }
         }
         return value;
