@@ -1,6 +1,7 @@
 package mysystem;
 
 import java.sql.*;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Report {
@@ -97,78 +98,85 @@ public class Report {
         }
     }
 
-    private void individualReport() {
-        view1();
+private void individualReport() {
+    view1();
+    
+    int patientId = -1; 
+    boolean validInput = false;
+    while (!validInput) {
         System.out.print("ENTER PATIENT ID TO VIEW BILLING DETAILS!: ");
-        int patientId = input.nextInt();
-
-        System.out.println("|=========================================================|");
-        System.out.println("|           INDIVIDUAL PATIENT AND BILLING REPORTS        |");
-        System.out.println("|=========================================================|");
-
-        String patientQuery = "SELECT * FROM tbl_patient WHERE patient_id = ?";
-        String billingQuery = "SELECT * FROM tbl_billing WHERE patient_id = ?";
-        
-        try (Connection conn = conf.connectDB();
-             PreparedStatement patientStmt = conn.prepareStatement(patientQuery)) {
-
-            patientStmt.setInt(1, patientId);
-            ResultSet rsPatient = patientStmt.executeQuery();
-
-            if (rsPatient.next()) {
-                System.out.println("|========================================================|");
-                System.out.println("|          PATIENT INFO        |    PATIENT DETAILS      |");
-                System.out.println("|========================================================|");
-                System.out.printf("| %-28s |%-25s|\n", "Patient ID:", rsPatient.getInt("patient_id"));
-                System.out.printf("| %-28s |%-25s|\n", "First Name:", rsPatient.getString("First_Name"));
-                System.out.printf("| %-28s |%-25s|\n", "Last Name:", rsPatient.getString("Last_Name"));
-                System.out.printf("| %-28s |%-25s|\n", "Address:", rsPatient.getString("Address"));
-                System.out.printf("| %-28s |%-25s|\n", "Contact No:", rsPatient.getString("Contact_No"));
-                System.out.printf("| %-28s |%-25s|\n", "Age:", rsPatient.getString("Age"));
-                System.out.printf("| %-28s |%-25s|\n", "Email:", rsPatient.getString("Email"));
-                System.out.printf("| %-28s |%-25s|\n", "Gender:", rsPatient.getString("Gender"));
-                System.out.printf("| %-28s |%-25s|\n", "InOutStatus:", rsPatient.getString("InOutStatus"));
-                System.out.println("|========================================================|");
-
-                System.out.println("|========================================================|");
-                System.out.println("|                 BILLING INFORMATION                    |");
-                System.out.println("|========================================================|");
-                System.out.println("|===================================================================================================================================================|");
-                System.out.printf(" | %-20s| %-16s | %-15s | %-15s | %-15s | %-15s | %-18s      |\n", 
-                                  "PATIENT NAME", "BILLING ID", "ADMISSION DATE", "DISCHARGE DATE", 
-                                  "TREATMENT TYPE", "TOTAL BILLS", "PAYMENT STATUS PAID/UNPAID");
-                System.out.println("|===================================================================================================================================================|");
-
-                try (PreparedStatement billingStmt = conn.prepareStatement(billingQuery)) {
-                    billingStmt.setInt(1, patientId);
-                    ResultSet rsBilling = billingStmt.executeQuery();
-
-                    boolean hasBillingRecords = false;
-                    while (rsBilling.next()) {
-                        hasBillingRecords = true;
-                        String patientName = rsPatient.getString("First_Name") + " " + rsPatient.getString("Last_Name");
-
-                        System.out.printf("| %-20s | %-16d | %-15s | %-15s | %-15s | %-15s | %-15s                 |\n", 
-                                          patientName, 
-                                          rsBilling.getInt("billing_id"), 
-                                          rsBilling.getString("admission_date"), 
-                                          rsBilling.getString("discharge_date"), 
-                                          rsBilling.getString("treatment_type"), 
-                                          rsBilling.getString("total_bill_amount"), 
-                                          rsBilling.getString("payment_status"));
-                    }
-
-                    if (!hasBillingRecords) {
-                        System.out.println("| NO BILLING RECORDS FOUND FOR THIS PATIENT.                                                 |");
-                    }
-                }
-                System.out.println("|===================================================================================================================================================|");
-
-            } else {
-                System.out.println("PATIENT WITH ID " + patientId + " NOT FOUND.");
-            }
-        } catch (SQLException e) {
-            System.err.println("ERROR GENERATING INDIVIDUAL REPORT: " + e.getMessage());
-        }
+        try {
+            patientId = input.nextInt();
+            validInput = true;
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input! Please enter a patient ID.");
+            input.next();
     }
+
+    String patientQuery = "SELECT * FROM tbl_patient WHERE patient_id = ?";
+    String billingQuery = "SELECT * FROM tbl_billing WHERE patient_id = ?";
+    
+    try (Connection conn = conf.connectDB();
+         PreparedStatement patientStmt = conn.prepareStatement(patientQuery)) {
+
+        patientStmt.setInt(1, patientId);
+        ResultSet rsPatient = patientStmt.executeQuery();
+
+        if (rsPatient.next()) {
+            System.out.println("|========================================================|");
+            System.out.println("|          PATIENT INFO        |    PATIENT DETAILS      |");
+            System.out.println("|========================================================|");
+            System.out.printf("| %-28s |%-25s|\n", "Patient ID:", rsPatient.getInt("patient_id"));
+            System.out.printf("| %-28s |%-25s|\n", "First Name:", rsPatient.getString("First_Name"));
+            System.out.printf("| %-28s |%-25s|\n", "Last Name:", rsPatient.getString("Last_Name"));
+            System.out.printf("| %-28s |%-25s|\n", "Address:", rsPatient.getString("Address"));
+            System.out.printf("| %-28s |%-25s|\n", "Contact No:", rsPatient.getString("Contact_No"));
+            System.out.printf("| %-28s |%-25s|\n", "Age:", rsPatient.getString("Age"));
+            System.out.printf("| %-28s |%-25s|\n", "Email:", rsPatient.getString("Email"));
+            System.out.printf("| %-28s |%-25s|\n", "Gender:", rsPatient.getString("Gender"));
+            System.out.printf("| %-28s |%-25s|\n", "InOutStatus:", rsPatient.getString("InOutStatus"));
+            System.out.println("|========================================================|");
+
+            System.out.println("|========================================================|");
+            System.out.println("|                 BILLING INFORMATION                    |");
+            System.out.println("|========================================================|");
+            System.out.println("|===================================================================================================================================================|");
+            System.out.printf(" | %-20s| %-16s | %-15s | %-15s | %-15s | %-15s | %-18s      |\n", 
+                              "PATIENT NAME", "BILLING ID", "ADMISSION DATE", "DISCHARGE DATE", 
+                              "TREATMENT TYPE", "TOTAL BILLS", "PAYMENT STATUS PAID/UNPAID");
+            System.out.println("|===================================================================================================================================================|");
+
+            try (PreparedStatement billingStmt = conn.prepareStatement(billingQuery)) {
+                billingStmt.setInt(1, patientId);
+                ResultSet rsBilling = billingStmt.executeQuery();
+
+                boolean hasBillingRecords = false;
+                while (rsBilling.next()) {
+                    hasBillingRecords = true;
+                    String patientName = rsPatient.getString("First_Name") + " " + rsPatient.getString("Last_Name");
+
+                    System.out.printf("| %-20s | %-16d | %-15s | %-15s | %-15s | %-15s | %-15s                 |\n", 
+                                      patientName, 
+                                      rsBilling.getInt("billing_id"), 
+                                      rsBilling.getString("admission_date"), 
+                                      rsBilling.getString("discharge_date"), 
+                                      rsBilling.getString("treatment_type"), 
+                                      rsBilling.getString("total_bill_amount"), 
+                                      rsBilling.getString("payment_status"));
+                }
+
+                if (!hasBillingRecords) {
+                    System.out.println("| NO BILLING RECORDS FOUND FOR THIS PATIENT.                                                 |");
+                }
+            }
+            System.out.println("|===================================================================================================================================================|");
+
+        } else {
+            System.out.println("PATIENT WITH ID " + patientId + " NOT FOUND.");
+        }
+    } catch (SQLException e) {
+        System.err.println("ERROR GENERATING INDIVIDUAL REPORT: " + e.getMessage());
+    }
+}
+}
 }

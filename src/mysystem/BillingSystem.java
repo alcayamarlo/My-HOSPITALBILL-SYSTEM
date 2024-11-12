@@ -80,6 +80,7 @@ public void addBillingRecord() {
             sc.nextLine();
             System.out.print("Admission Date (YYYY-MM-DD): ");
             String admissionDate = sc.nextLine();
+            
             System.out.print("Discharge Date (YYYY-MM-DD): ");
             String dischargeDate = sc.nextLine();
             System.out.print("Treatment Type: ");
@@ -155,7 +156,7 @@ public void updateBillingRecord() {
             String qry = "SELECT payment_status FROM tbl_billing WHERE billing_id = ?";
             currentStatus = conf.getPaymentStatus(qry, billing_id);
             if (currentStatus == null) {
-                System.out.println("Error!!! Billing ID not found. Please try again!!!");
+                System.out.print("Error!!! Billing ID not found. Please try again!!!");
             } else {
                 break;
             }
@@ -255,10 +256,10 @@ public void deleteBillingRecord() {
                 value = sc.nextDouble();
                 sc.nextLine();
                 if (value < min) {
-                    System.out.println("Invalid input. Please enter a number greater than or equal to " + min + ".");
+                    System.out.print("Invalid input. Please enter a number greater than or equal to " + min + ":");
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter a valid number.");
+                System.out.print("Invalid input. Please enter a valid number :");
                 sc.nextLine();
             }
         }

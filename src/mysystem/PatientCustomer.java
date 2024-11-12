@@ -63,7 +63,7 @@ public class PatientCustomer {
 
         System.out.println("Thank you for using the Patient Management System!");
     }
-
+    
     public void addPatient() {
         System.out.print("Patient First Name: ");
         String firstName = sc.nextLine();
@@ -93,9 +93,8 @@ public class PatientCustomer {
 
    public void updatePatient() {
     try {
-        System.out.println("Enter Patient ID to Update:");
-        int patientId = Integer.parseInt(sc.nextLine());
-        
+        int patientId;
+        patientId = getValidInteger("Enter Patient ID to Update: ", 1, Integer.MAX_VALUE);
         String checkQuery = "SELECT patient_id FROM tbl_patient WHERE patient_id = ?";
         while (!conf.checkIfExists(checkQuery, patientId)) {
             System.out.println("Patient ID not found! Please enter a valid Patient ID:");
@@ -161,10 +160,10 @@ public void deletePatient() {
                 action = sc.nextInt();
                 sc.nextLine();
                 if (action < min || action > max) {
-                    System.out.println("Invalid option. Please enter a number between " + min + " and " + max + ".");
+                    System.out.print("Invalid option. Please enter a number between " + min + " and " + max + " :");
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter a number.");
+                System.out.print("Invalid input. Please enter a number :");
                 sc.nextLine();
             }
         }
