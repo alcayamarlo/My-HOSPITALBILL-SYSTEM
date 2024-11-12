@@ -93,12 +93,12 @@ public class PatientCustomer {
 
    public void updatePatient() {
     try {
-        int patientId;
-        patientId = getValidInteger("Enter Patient ID to Update: ", 1, Integer.MAX_VALUE);
+        int patient_id;
+        patient_id = getValidInteger("Enter Patient ID to Update: ", 1, Integer.MAX_VALUE);
         String checkQuery = "SELECT patient_id FROM tbl_patient WHERE patient_id = ?";
-        while (!conf.checkIfExists(checkQuery, patientId)) {
+        while (!conf.checkIfExists(checkQuery, patient_id)) {
             System.out.println("Patient ID not found! Please enter a valid Patient ID:");
-            patientId = Integer.parseInt(sc.nextLine()); 
+            patient_id = Integer.parseInt(sc.nextLine()); 
         }
 
         System.out.print("New First Name: ");
@@ -127,7 +127,7 @@ public class PatientCustomer {
         String inOutStatus = getInOutStatus();
 
         String qry = "UPDATE tbl_patient SET First_Name = ?, Last_Name = ?, Address = ?, Contact_No = ?, Age = ?, Gender = ?, Email = ?, InOutStatus = ? WHERE patient_id = ?";
-        conf.updateRecords(qry, firstName, lastName, address, contactNo, age, gender, email, inOutStatus, patientId);
+        conf.updateRecords(qry, firstName, lastName, address, contactNo, age, gender, email, inOutStatus, patient_id);
         System.out.println("Patient updated successfully!");
     } catch (Exception e) {
         System.err.println("Error updating patient: " + e.getMessage());
@@ -137,14 +137,14 @@ public class PatientCustomer {
 
 public void deletePatient() {
     try {
-        int patientId = getValidInteger("Enter Patient ID to delete: ", 1, Integer.MAX_VALUE);
+        int patient_id = getValidInteger("Enter Patient ID to delete: ", 1, Integer.MAX_VALUE);
         String checkQuery = "SELECT patient_id FROM tbl_patient WHERE patient_id = ?";
-        while (!conf.checkIfExists(checkQuery, patientId)) {
+        while (!conf.checkIfExists(checkQuery, patient_id)) {
             System.out.println("Warning: Patient ID not found. Please enter a valid Patient ID.");
-            patientId = getValidInteger("Enter Patient ID to delete: ", 1, Integer.MAX_VALUE);
+            patient_id = getValidInteger("Enter Patient ID to delete: ", 1, Integer.MAX_VALUE);
         }
         String qry = "DELETE FROM tbl_patient WHERE patient_id = ?";
-        conf.deleteRecords(qry, patientId);
+        conf.deleteRecords(qry, patient_id);
         System.out.println("Patient deleted successfully!");
 
     } catch (Exception e) {

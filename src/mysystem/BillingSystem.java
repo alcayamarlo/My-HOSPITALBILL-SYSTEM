@@ -197,14 +197,14 @@ public void updateBillingRecord() {
 
 public void deleteBillingRecord() {
     try {
-        int billingId = getValidInteger("Enter Billing ID to delete: ", 1, Integer.MAX_VALUE);
+        int billing_id = getValidInteger("Enter Billing ID to delete: ", 1, Integer.MAX_VALUE);
         String checkQuery = "SELECT COUNT(*) FROM tbl_billing WHERE billing_id = ?";
-        while (!conf.checkIfExists(checkQuery, billingId)) {
-            System.out.println("Warning: Billing ID not found. Please enter a valid Billing ID.");
-            billingId = getValidInteger("Enter Billing ID to delete: ", 1, Integer.MAX_VALUE);
+        while (!conf.checkIfExists(checkQuery, billing_id)) {
+            System.out.println("Warning: Billing ID notbillingId found. Please enter a valid Billing ID.");
+            billing_id = getValidInteger("Enter Billing ID to delete: ", 1, Integer.MAX_VALUE);
         }
         String qry = "DELETE FROM tbl_billing WHERE billing_id = ?";
-        conf.deleteRecords(qry, billingId);
+        conf.deleteRecords(qry, billing_id);
         System.out.println("Billing record deleted successfully!");
 
     } catch (Exception e) {

@@ -101,12 +101,12 @@ public class Report {
 private void individualReport() {
     view1();
     
-    int patientId = -1; 
+    int patient_id = -1; 
     boolean validInput = false;
     while (!validInput) {
         System.out.print("ENTER PATIENT ID TO VIEW BILLING DETAILS!: ");
         try {
-            patientId = input.nextInt();
+            patient_id = input.nextInt();
             validInput = true;
         } catch (InputMismatchException e) {
             System.out.println("Invalid input! Please enter a patient ID.");
@@ -119,7 +119,7 @@ private void individualReport() {
     try (Connection conn = conf.connectDB();
          PreparedStatement patientStmt = conn.prepareStatement(patientQuery)) {
 
-        patientStmt.setInt(1, patientId);
+        patientStmt.setInt(1, patient_id);
         ResultSet rsPatient = patientStmt.executeQuery();
 
         if (rsPatient.next()) {
@@ -147,7 +147,7 @@ private void individualReport() {
             System.out.println("|===================================================================================================================================================|");
 
             try (PreparedStatement billingStmt = conn.prepareStatement(billingQuery)) {
-                billingStmt.setInt(1, patientId);
+                billingStmt.setInt(1, patient_id);
                 ResultSet rsBilling = billingStmt.executeQuery();
 
                 boolean hasBillingRecords = false;
@@ -172,7 +172,7 @@ private void individualReport() {
             System.out.println("|===================================================================================================================================================|");
 
         } else {
-            System.out.println("PATIENT WITH ID " + patientId + " NOT FOUND.");
+            System.out.println("PATIENT WITH ID " + patient_id + " NOT FOUND.");
         }
     } catch (SQLException e) {
         System.err.println("ERROR GENERATING INDIVIDUAL REPORT: " + e.getMessage());
