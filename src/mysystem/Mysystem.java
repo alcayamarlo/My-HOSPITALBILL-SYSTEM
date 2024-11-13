@@ -18,8 +18,6 @@ public class Mysystem {
             System.out.println("|3.               REPORTS                            |");  
             System.out.println("|4.                 EXIT                             |");
             System.out.println("|====================================================|");
-
-            
             
             int num = -1; 
             while (true) {
