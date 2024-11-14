@@ -9,18 +9,27 @@ public class PatientCustomer {
 
     public void patientInfo() {
         String response;
+        
         do {
-            System.out.println("|====================================|");
-            System.out.println("|                                    |");
-            System.out.println("|     PATIENTS MANAGEMENT SYSTEM     |");
-            System.out.println("|                                    |");
-            System.out.println("|====================================|");
-            System.out.println("|1.        ADD PATIENT DETAILS       |");
-            System.out.println("|2.          VIEW DETAILS            |");
-            System.out.println("|3.         UPDATE DETAILS           |");
-            System.out.println("|4.         DELETE DETAILS           |");
-            System.out.println("|5.            EXIT                  |");
-            System.out.println("|====================================|");
+            
+            System.out.println("|============================================|");
+            System.out.println("|                                            |");
+            System.out.println("|         PATIENTS MANAGEMENT SYSTEM         |");
+            System.out.println("|                                            |");
+            System.out.println("|============================================|");
+            System.out.println("|                                            |");
+            System.out.println("|  1.            ADD PATIENT DETAILS         |");
+            System.out.println("|                                            |");
+            System.out.println("|  2.              VIEW DETAILS              |");
+            System.out.println("|                                            |");
+            System.out.println("|  3.             UPDATE DETAILS             |");
+            System.out.println("|                                            |");
+            System.out.println("|  4.             DELETE DETAILS             |");
+            System.out.println("|                                            |");
+            System.out.println("|  5.                EXIT                    |");
+            System.out.println("|                                            |");
+            System.out.println("|============================================|");
+
             System.out.print("\tCHOOSE A NUMBER (1-5) :");
 
             int action = -1;
@@ -39,19 +48,19 @@ public class PatientCustomer {
 
             switch (action) {
                 case 1:
-                    addPatient();
+                    addPatients();
                     break;
                 case 2:
                     viewPatients();
                     break;
                 case 3:
                     viewPatients();
-                    updatePatient();
+                    updatePatients();
                     viewPatients();
                     break;
                 case 4:
                     viewPatients();
-                    deletePatient();
+                    deletePatients();
                     viewPatients();
                     break;
                 case 5:
@@ -76,7 +85,7 @@ public class PatientCustomer {
         System.out.println("Thank you for using the Patient Management System!");
     }
     
-    public void addPatient() {
+    public void addPatients() {
         System.out.print("Patient First Name: ");
         String First_Name = sc.nextLine();
         System.out.print("Patient Last Name: ");
@@ -135,7 +144,7 @@ public class PatientCustomer {
         conf.viewRecords(qry, hdrs, clmn);
     }
 
-    public void updatePatient() {
+    public void updatePatients() {
         try {
             System.out.print("Enter Patient ID to Update: ");
             int patient_id = -1;
@@ -216,7 +225,7 @@ public class PatientCustomer {
         }
     }
 
-    public void deletePatient() {
+    public void deletePatients() {
         try {
             int patient_id = -1;
             while (patient_id < 1) {

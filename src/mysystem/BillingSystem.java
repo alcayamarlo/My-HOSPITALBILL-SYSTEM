@@ -15,16 +15,27 @@ public class BillingSystem {
     
     public void billingInfo() {
         String response;
+        
         do {
+            
             System.out.println("|============================================|");
-            System.out.println("|           BILLINGS MANAGEMENT SYSTEM       |");
+            System.out.println("|                                            |");
+            System.out.println("|         BILLINGS MANAGEMENT SYSTEM         |");
+            System.out.println("|                                            |");
             System.out.println("|============================================|");
-            System.out.println("|1.         ADD BILLING RECORDS              |");
-            System.out.println("|2.             VIEW RECORD                  |");
-            System.out.println("|3.            UPDATE RECORD                 |");
-            System.out.println("|4.            DELETE RECORD                 |");
-            System.out.println("|5.               EXIT                       |");
+            System.out.println("|                                            |");
+            System.out.println("|  1.            ADD BILLING RECORDS         |");
+            System.out.println("|                                            |");
+            System.out.println("|  2.              VIEW RECORD               |");
+            System.out.println("|                                            |");
+            System.out.println("|  3.             UPDATE RECORD              |");
+            System.out.println("|                                            |");
+            System.out.println("|  4.             DELETE RECORD              |");
+            System.out.println("|                                            |");
+            System.out.println("|  5.                EXIT                    |");
+            System.out.println("|                                            |");
             System.out.println("|============================================|");
+
 
             System.out.print("CHOOSE A NUMBER (1-5): ");
             int action = -1;
@@ -47,17 +58,17 @@ public class BillingSystem {
                     addBillingRecord();  
                     break;
                 case 2:
-                    viewBillingRecords(); 
+                    viewBillingRecord(); 
                     break;
                 case 3:
-                    viewBillingRecords();
+                    viewBillingRecord();
                     updateBillingRecord(); 
-                    viewBillingRecords();
+                    viewBillingRecord();
                     break;
                 case 4:
-                    viewBillingRecords();
+                    viewBillingRecord();
                     deleteBillingRecord();
-                    viewBillingRecords();
+                    viewBillingRecord();
                     break;
                 case 5:
                     return; 
@@ -81,95 +92,114 @@ public class BillingSystem {
         System.out.println("THANK YOU FOR USING MY BILLING MANAGEMENT SYSTEM!!");
     }
 
-    public void addBillingRecord() {
-    try {
-        int patient_id = -1;
-        while (patient_id < 1) {
-            try {
-                System.out.print("Patient ID: ");
-                patient_id = sc.nextInt();
-                sc.nextLine();
-                if (conf.getSingleValue("SELECT patient_id FROM tbl_patient WHERE patient_id = ?", patient_id) == 0) {
-                    System.out.println("Patient ID doesn't exist. Enter again!");
-                    patient_id = -1;
-                } else {
-                    int existingBillingCount = conf.getSingleValue("SELECT COUNT(*) FROM tbl_billing WHERE patient_id = ?", patient_id);
-                    if (existingBillingCount > 0) {
-                        System.out.println("This patient already has a billing record. Please enter a different Patient ID.");
-                        patient_id = -1; 
+   public void addBillingRecord() {
+        try {
+            boolean addAnotherRecord = true;
+            while (addAnotherRecord) {
+                int patient_id = -1;
+                while (patient_id < 1) {
+                    try {
+                        System.out.print("Patient ID: ");
+                        patient_id = sc.nextInt();
+                        sc.nextLine();
+                        if (conf.getSingleValue("SELECT patient_id FROM tbl_patient WHERE patient_id = ?", patient_id) == 0) {
+                            System.out.println("Patient ID doesn't exist. Enter again!");
+                            patient_id = -1;
+                        } else {
+                            int existingBillingCount = conf.getSingleValue("SELECT COUNT(*) FROM tbl_billing WHERE patient_id = ?", patient_id);
+                            if (existingBillingCount > 0) {
+                                System.out.println("This patient already has a billing record.");
+                                return; 
+                            }
+                        }
+                    } catch (InputMismatchException e) {
+                        System.out.print("Invalid input. Please enter a valid integer for Patient ID: ");
+                        sc.nextLine(); 
                     }
                 }
-            } catch (InputMismatchException e) {
-                System.out.print("Invalid input. Please enter a valid integer for Patient ID: ");
-                sc.nextLine(); 
-            }
-        }
 
-        String admissionDate;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        while (true) {
-            System.out.print("Admission Date (YYYY-MM-DD): ");
-            admissionDate = sc.nextLine();
-            try {
-                LocalDate.parse(admissionDate, formatter);
-                break; 
-            } catch (DateTimeParseException e) {
-                System.out.println("Invalid date. Please enter a valid date (YYYY-MM-DD).");
-            }
-        }
-
-        String dischargeDate;
-        while (true) {
-            System.out.print("Discharge Date (YYYY-MM-DD): ");
-            dischargeDate = sc.nextLine();
-            try {
-                LocalDate.parse(dischargeDate, formatter);
-                break; 
-            } catch (DateTimeParseException e) {
-                System.out.println("Invalid date. Please enter a valid discharge date (YYYY-MM-DD).");
-            }
-        }
-
-        System.out.print("Treatment Type: ");
-        String treatmentType = sc.nextLine();
-
-        double totalBillAmount = -1;
-        while (totalBillAmount < 0) {
-            System.out.print("Total Bill Amount: ");
-            if (sc.hasNextDouble()) {
-                totalBillAmount = sc.nextDouble();
-                sc.nextLine();
-                if (totalBillAmount < 0) {
-                    System.out.println("Amount cannot be negative. Please enter a valid amount.");
+                String admissionDate;
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                while (true) {
+                    System.out.print("Admission Date (YYYY-MM-DD): ");
+                    admissionDate = sc.nextLine();
+                    try {
+                        LocalDate.parse(admissionDate, formatter);
+                        break; 
+                    } catch (DateTimeParseException e) {
+                        System.out.println("Invalid date. Please enter a valid date (YYYY-MM-DD).");
+                    }
                 }
-            } else {
-                System.out.println("Invalid input. Please enter a valid decimal number.");
-                sc.next(); 
+
+                String dischargeDate;
+                while (true) {
+                    System.out.print("Discharge Date (YYYY-MM-DD): ");
+                    dischargeDate = sc.nextLine();
+                    try {
+                        LocalDate.parse(dischargeDate, formatter);
+                        break; 
+                    } catch (DateTimeParseException e) {
+                        System.out.println("Invalid date. Please enter a valid discharge date (YYYY-MM-DD).");
+                    }
+                }
+
+                System.out.print("Treatment Type: ");
+                String treatmentType = sc.nextLine();
+
+                double totalBillAmount = -1;
+                while (totalBillAmount < 0) {
+                    System.out.print("Total Bill Amount: ");
+                    if (sc.hasNextDouble()) {
+                        totalBillAmount = sc.nextDouble();
+                        sc.nextLine();
+                        if (totalBillAmount < 0) {
+                            System.out.println("Amount cannot be negative. Please enter a valid amount.");
+                        }
+                    } else {
+                        System.out.println("Invalid input. Please enter a valid decimal number.");
+                        sc.next(); 
+                    }
+                }
+
+                String paymentStatus;
+                while (true) {
+                    System.out.print("Payment Status (paid/unpaid): ");
+                    paymentStatus = sc.nextLine().toLowerCase();
+                    if (paymentStatus.equals("paid") || paymentStatus.equals("unpaid")) {
+                        break;
+                    } else {
+                        System.out.println("Invalid input. Please enter paid or unpaid only.");
+                    }
+                }
+
+                String sql = "INSERT INTO tbl_billing (patient_id, admission_date, discharge_date, treatment_type, total_bill_amount, payment_status) VALUES (?, ?, ?, ?, ?, ?)";
+                conf.addRecords(sql, patient_id, admissionDate, dischargeDate, treatmentType, totalBillAmount, paymentStatus);
+                System.out.println("Billing record added successfully!");
+
+                while (true) {
+                    System.out.print("Do you want to perform another action? (yes/no): ");
+                    String response = sc.nextLine().trim().toLowerCase();
+                    if (response.equals("yes")) {
+                        addAnotherRecord = true;
+                        break;  
+                    } else if (response.equals("no")) {
+                        addAnotherRecord = false;
+                        System.out.println("RETURNING TO MAIN MENU");
+                        return; 
+                    } else {
+                        System.out.println("Invalid input. Please enter yes or no only.");
+                    }
+                }
             }
+        } catch (Exception e) {
+            System.err.println("Error adding billing record: " + e.getMessage());
+            e.printStackTrace();
         }
-
-        String paymentStatus;
-        while (true) {
-            System.out.print("Payment Status (paid/unpaid): ");
-            paymentStatus = sc.nextLine().toLowerCase();
-            if (paymentStatus.equals("paid") || paymentStatus.equals("unpaid")) {
-                break;
-            } else {
-                System.out.println("Invalid input. Please enter 'paid' or 'unpaid' only.");
-            }
-        }
-
-        String sql = "INSERT INTO tbl_billing (patient_id, admission_date, discharge_date, treatment_type, total_bill_amount, payment_status) VALUES (?, ?, ?, ?, ?, ?)";
-        conf.addRecords(sql, patient_id, admissionDate, dischargeDate, treatmentType, totalBillAmount, paymentStatus);
-        System.out.println("Billing record added successfully!");
-
-    } catch (Exception e) {
-        System.err.println("Error adding billing record: " + e.getMessage());
-        e.printStackTrace();
     }
-}
 
-    public void viewBillingRecords() {
+
+
+    public void viewBillingRecord() {
         try {
             String qry = "SELECT tbl_billing.billing_id, "
                        + "(tbl_patient.First_Name || ' ' || tbl_patient.Last_Name) AS patient_name, "

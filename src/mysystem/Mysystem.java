@@ -10,15 +10,21 @@ public class Mysystem {
             
             System.out.println("|====================================================|");
             System.out.println("|                                                    |");
-            System.out.println("|     WELCOME TO PATIENT AND HOSPITAL BILL SYSTEM    |");
+            System.out.println("|      WELCOME TO PATIENT AND HOSPITAL BILL SYSTEM   |");
             System.out.println("|                                                    |");
             System.out.println("|====================================================|");
-            System.out.println("|1.          PATIENTS INFORMATION                    |");
-            System.out.println("|2.          BILLINGS INFORMATION                    |");
-            System.out.println("|3.               REPORTS                            |");  
-            System.out.println("|4.                 EXIT                             |");
+            System.out.println("|                                                    |");
+            System.out.println("|  1.          PATIENTS INFORMATION                  |");
+            System.out.println("|                                                    |");
+            System.out.println("|  2.          BILLINGS INFORMATION                  |");
+            System.out.println("|                                                    |");
+            System.out.println("|  3.               REPORTS                          |");
+            System.out.println("|                                                    |");
+            System.out.println("|  4.                 EXIT                           |");
+            System.out.println("|                                                    |");
             System.out.println("|====================================================|");
-            
+
+
             int num = -1; 
             while (true) {
                 System.out.print("\tCHOOSE A NUMBER (1-4) : ");
@@ -30,7 +36,7 @@ public class Mysystem {
                         System.out.println("WARNING:PLEASE ENTER A NUMBER BETWEEN 1 AND 4 !!");
                     }
                 } catch (NumberFormatException e) {
-                    System.out.println("Warning: Please enter a valid integer.");
+                    System.out.println("WARNING!! ENTER A VALID INTEGER.");
                 }
             }
 
@@ -48,11 +54,11 @@ public class Mysystem {
                     r.reportMenu();
                     break;
                 case 4:
-                    System.out.println("Returning to main menu. Press Enter to continue.");
+                    System.out.print("RETURNING TO MAIN MENU. PRESS ENTER TO CONTINUE.");
                     input.nextLine(); 
                     break;
                 default:
-                    System.out.println("Error: Unexpected case encountered.");
+                    System.out.println("Error.");
                     break;
             }
         } while (true);

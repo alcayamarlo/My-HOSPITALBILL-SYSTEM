@@ -10,15 +10,21 @@ public class Report{
 
     public void reportMenu(){
         boolean exit = true;
+        
         do {
+            
             System.out.println("|===========================================|");
             System.out.println("|                                           |");
-            System.out.println("|              REPORTS MENU                 |");
+            System.out.println("|               REPORTS MENU                |");
             System.out.println("|                                           |");
             System.out.println("|===========================================|");
-            System.out.println("|1.           VIEW ALL REPORTS              |");
-            System.out.println("|2.         INDIVIDUAL REPORTS              |");
-            System.out.println("|3.              EXIT                       |");
+            System.out.println("|                                           |");
+            System.out.println("|  1.            VIEW ALL REPORTS           |");
+            System.out.println("|                                           |");
+            System.out.println("|  2.          INDIVIDUAL REPORTS           |");
+            System.out.println("|                                           |");
+            System.out.println("|  3.                EXIT                   |");
+            System.out.println("|                                           |");
             System.out.println("|===========================================|");
             System.out.print("\tCHOOSE A NUMBER (1-3): ");
             
@@ -76,7 +82,7 @@ public class Report{
 
             while (rs.next()) {
                 System.out.printf("| %-15d | %-15s | %-15s | %-15s | %-15s | %-8s | %-26s | %-8s | %-14s | %-12s | %-15s | %-15s | %-15s | %-16s | %-28s   |\n", 
-                                  rs.getInt("patient_id"), 
+                                  rs.getInt("patient_id"),
                                   rs.getString("First_Name"), 
                                   rs.getString("Last_Name"), 
                                   rs.getString("Address"), 
@@ -118,25 +124,25 @@ public class Report{
                     ResultSet rsPatient = patientStmt.executeQuery();
 
                     if (rsPatient.next()) {
-                        System.out.println("|========================================================|");
-                        System.out.println("|          PATIENT INFO        |    PATIENT DETAILS      |");
-                        System.out.println("|========================================================|");
-                        System.out.printf("| %-28s |%-25s|\n", "Patient ID:", rsPatient.getInt("patient_id"));
-                        System.out.printf("| %-28s |%-25s|\n", "First Name:", rsPatient.getString("First_Name"));
-                        System.out.printf("| %-28s |%-25s|\n", "Last Name:", rsPatient.getString("Last_Name"));
-                        System.out.printf("| %-28s |%-25s|\n", "Address:", rsPatient.getString("Address"));
-                        System.out.printf("| %-28s |%-25s|\n", "Contact No:", rsPatient.getString("Contact_No"));
-                        System.out.printf("| %-28s |%-25s|\n", "Age:", rsPatient.getString("Age"));
-                        System.out.printf("| %-28s |%-25s|\n", "Email:", rsPatient.getString("Email"));
-                        System.out.printf("| %-28s |%-25s|\n", "Gender:", rsPatient.getString("Gender"));
-                        System.out.printf("| %-28s |%-25s|\n", "InOutStatus:", rsPatient.getString("InOutStatus"));
-                        System.out.println("|========================================================|");
+                        System.out.println("                                          |========================================================|");
+                        System.out.println("                                          |          PATIENT INFO        |    PATIENT DETAILS      |");
+                        System.out.println("                                          |========================================================|");
+                        System.out.printf("                                          | %-28s |%-25s|\n", "Patient ID:", rsPatient.getInt("patient_id"));
+                        System.out.printf("                                          | %-28s |%-25s|\n", "First Name:", rsPatient.getString("First_Name"));
+                        System.out.printf("                                          | %-28s |%-25s|\n", "Last Name:", rsPatient.getString("Last_Name"));
+                        System.out.printf("                                          | %-28s |%-25s|\n", "Address:", rsPatient.getString("Address"));
+                        System.out.printf("                                          | %-28s |%-25s|\n", "Contact No:", rsPatient.getString("Contact_No"));
+                        System.out.printf("                                          | %-28s |%-25s|\n", "Age:", rsPatient.getString("Age"));
+                        System.out.printf("                                          | %-28s |%-25s|\n", "Email:", rsPatient.getString("Email"));
+                        System.out.printf("                                          | %-28s |%-25s|\n", "Gender:", rsPatient.getString("Gender"));
+                        System.out.printf("                                          | %-28s |%-25s|\n", "InOutStatus:", rsPatient.getString("InOutStatus"));
+                        System.out.println("                                          |========================================================|");
 
-                        System.out.println("|========================================================|");
-                        System.out.println("|                 BILLING INFORMATION                    |");
-                        System.out.println("|========================================================|");
+                        System.out.println("                                          |========================================================|");
+                        System.out.println("                                          |                 BILLING INFORMATION                    |");
+                        System.out.println("                                          |========================================================|");
                         System.out.println("|===================================================================================================================================================|");
-                        System.out.printf(" | %-20s| %-16s | %-15s | %-15s | %-15s | %-15s | %-18s      |\n", 
+                        System.out.printf("|  %-20s| %-16s | %-15s | %-15s | %-15s | %-15s | %-18s      |\n", 
                                           "PATIENT NAME", "BILLING ID", "ADMISSION DATE", "DISCHARGE DATE", 
                                           "TREATMENT TYPE", "TOTAL BILLS", "PAYMENT STATUS PAID/UNPAID");
                         System.out.println("|===================================================================================================================================================|");
