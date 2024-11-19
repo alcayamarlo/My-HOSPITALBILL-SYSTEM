@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Mysystem {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        
+        boolean exit = true;
         do {
             
             System.out.println("|====================================================|");
@@ -54,14 +54,14 @@ public class Mysystem {
                     r.reportMenu();
                     break;
                 case 4:
-                    System.out.print("RETURNING TO MAIN MENU. PRESS ENTER TO CONTINUE.");
-                    input.nextLine(); 
+                    exit = false;
+                    System.out.print("Exiting The Program, Thank You For Using!");
                     break;
                 default:
                     System.out.println("Error.");
                     break;
             }
-        } while (true);
+        } while (exit);
 
     }
 }
