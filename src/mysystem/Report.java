@@ -124,23 +124,23 @@ public class Report{
                     ResultSet rsPatient = patientStmt.executeQuery();
 
                     if (rsPatient.next()) {
-                        System.out.println("                                          |========================================================|");
-                        System.out.println("                                          |          PATIENT INFO        |    PATIENT DETAILS      |");
-                        System.out.println("                                          |========================================================|");
-                        System.out.printf("                                          | %-28s |%-25s|\n", "Patient ID:", rsPatient.getInt("patient_id"));
-                        System.out.printf("                                          | %-28s |%-25s|\n", "First Name:", rsPatient.getString("First_Name"));
-                        System.out.printf("                                          | %-28s |%-25s|\n", "Last Name:", rsPatient.getString("Last_Name"));
-                        System.out.printf("                                          | %-28s |%-25s|\n", "Address:", rsPatient.getString("Address"));
-                        System.out.printf("                                          | %-28s |%-25s|\n", "Contact No:", rsPatient.getString("Contact_No"));
-                        System.out.printf("                                          | %-28s |%-25s|\n", "Age:", rsPatient.getString("Age"));
-                        System.out.printf("                                          | %-28s |%-25s|\n", "Email:", rsPatient.getString("Email"));
-                        System.out.printf("                                          | %-28s |%-25s|\n", "Gender:", rsPatient.getString("Gender"));
-                        System.out.printf("                                          | %-28s |%-25s|\n", "InOutStatus:", rsPatient.getString("InOutStatus"));
-                        System.out.println("                                          |========================================================|");
+                        System.out.println("\t\t\t\t\t\t|========================================================|");
+                        System.out.println("\t\t\t\t\t\t|          PATIENT INFO        |    PATIENT DETAILS      |");
+                        System.out.println("\t\t\t\t\t\t|========================================================|");
+                        System.out.printf("\t\t\t\t\t\t| %-28s |%-25s|\n", "Patient ID:", rsPatient.getInt("patient_id"));
+                        System.out.printf("\t\t\t\t\t\t| %-28s |%-25s|\n", "First Name:", rsPatient.getString("First_Name"));
+                        System.out.printf("\t\t\t\t\t\t| %-28s |%-25s|\n", "Last Name:", rsPatient.getString("Last_Name"));
+                        System.out.printf("\t\t\t\t\t\t| %-28s |%-25s|\n", "Address:", rsPatient.getString("Address"));
+                        System.out.printf("\t\t\t\t\t\t| %-28s |%-25s|\n", "Contact No:", rsPatient.getString("Contact_No"));
+                        System.out.printf("\t\t\t\t\t\t| %-28s |%-25s|\n", "Age:", rsPatient.getString("Age"));
+                        System.out.printf("\t\t\t\t\t\t| %-28s |%-25s|\n", "Email:", rsPatient.getString("Email"));
+                        System.out.printf("\t\t\t\t\t\t| %-28s |%-25s|\n", "Gender:", rsPatient.getString("Gender"));
+                        System.out.printf("\t\t\t\t\t\t| %-28s |%-25s|\n", "InOutStatus:", rsPatient.getString("InOutStatus"));
+                        System.out.println("\t\t\t\t\t\t|========================================================|");
 
-                        System.out.println("                                          |========================================================|");
-                        System.out.println("                                          |                 BILLING INFORMATION                    |");
-                        System.out.println("                                          |========================================================|");
+                        System.out.println("\t\t\t\t\t\t|========================================================|");
+                        System.out.println("\t\t\t\t\t\t|                 BILLING INFORMATION                    |");
+                        System.out.println("\t\t\t\t\t\t|========================================================|");
                         System.out.println("|===================================================================================================================================================|");
                         System.out.printf("|  %-20s| %-16s | %-15s | %-15s | %-15s | %-15s | %-18s      |\n", 
                                           "PATIENT NAME", "BILLING ID", "ADMISSION DATE", "DISCHARGE DATE", 
