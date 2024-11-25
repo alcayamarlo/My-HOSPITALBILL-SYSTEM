@@ -9,7 +9,7 @@ import java.sql.*;
 
 public class BillingSystem {
     Scanner sc = new Scanner(System.in);
-    config conf = new config(); // Assuming this is the config class where DB-related methods are stored
+    config conf = new config(); 
     PatientCustomer pc = new PatientCustomer();
 
     public void billingInfo() {
@@ -236,48 +236,38 @@ public class BillingSystem {
     }
     public void updateBillingRecord() {
         try {
-            // Ask for the Billing ID to update
             System.out.print("Enter Billing ID to Update: ");
             int billing_id = -1;
             String currentStatus = null;
 
-            // Loop to validate the Billing ID and check its current status
             while (billing_id < 1 || currentStatus == null) {
                 try {
                     billing_id = sc.nextInt();
-                    sc.nextLine();  // Consume the newline character
-
-                    // Query to get the current payment status of the Billing ID
+                    sc.nextLine();
                     String qry = "SELECT payment_status FROM tbl_billing WHERE billing_id = ?";
                     currentStatus = conf.getPaymentStatus(qry, billing_id);
-
-                    // If no record is found, ask the user to try again
                     if (currentStatus == null) {
                         System.out.print("Error! Billing ID not found. Please try again: ");
                     }
                 } catch (InputMismatchException e) {
                     System.out.print("Invalid input. Please enter a valid integer for Billing ID: ");
-                    sc.nextLine();  // Consume invalid input
+                    sc.nextLine(); 
                 }
             }
 
-            // Check if the current status is 'paid' and prevent updates
             if ("paid".equalsIgnoreCase(currentStatus)) {
                 System.out.println("Error: This billing record is already paid and cannot be updated.");
-                return;  // Exit the method as no updates are allowed for paid records
+                return;  
             }
 
-            // If the status is 'unpaid', proceed with updating
             System.out.print("Enter New Payment Status (paid/unpaid): ");
             String newStatus = sc.nextLine();
 
-            // Validate the new payment status
             if (!newStatus.equalsIgnoreCase("paid") && !newStatus.equalsIgnoreCase("unpaid")) {
                 System.out.println("Invalid payment status. Please enter 'paid' or 'unpaid'.");
                 return;
             }
 
-            // Update the billing record with the new status
             String updateQuery = "UPDATE tbl_billing SET payment_status = ? WHERE billing_id = ?";
             conf.updateRecords(updateQuery, newStatus, billing_id);
 
@@ -326,6 +316,9 @@ public class BillingSystem {
           }
       } catch (Exception e) {
           System.err.println("Error deleting billing record: " + e.getMessage());
+    
       }
   }
+    
+    
  }
