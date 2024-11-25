@@ -8,11 +8,11 @@ public class Mysystem {
         boolean exit = true;
         do {
             
-            System.out.println("|====================================================|");
+            System.out.println("|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^|");
             System.out.println("|                                                    |");
             System.out.println("|      WELCOME TO PATIENT AND HOSPITAL BILL SYSTEM   |");
             System.out.println("|                                                    |");
-            System.out.println("|====================================================|");
+            System.out.println("|____________________________________________________|");
             System.out.println("|                                                    |");
             System.out.println("|  1.          PATIENTS INFORMATION                  |");
             System.out.println("|                                                    |");
@@ -21,9 +21,7 @@ public class Mysystem {
             System.out.println("|  3.               REPORTS                          |");
             System.out.println("|                                                    |");
             System.out.println("|  4.                 EXIT                           |");
-            System.out.println("|                                                    |");
-            System.out.println("|====================================================|");
-
+            System.out.println("|____________________________________________________|");
 
             int num = -1; 
             while (true) {

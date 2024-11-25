@@ -13,19 +13,18 @@ public class Report{
         
         do {
             
-            System.out.println("|===========================================|");
+            System.out.println("|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^|");
             System.out.println("|                                           |");
             System.out.println("|               REPORTS MENU                |");
             System.out.println("|                                           |");
-            System.out.println("|===========================================|");
+            System.out.println("|___________________________________________|");
             System.out.println("|                                           |");
             System.out.println("|  1.            VIEW ALL REPORTS           |");
             System.out.println("|                                           |");
             System.out.println("|  2.          INDIVIDUAL REPORTS           |");
             System.out.println("|                                           |");
             System.out.println("|  3.                EXIT                   |");
-            System.out.println("|                                           |");
-            System.out.println("|===========================================|");
+            System.out.println("|___________________________________________|");
             System.out.print("\tCHOOSE A NUMBER (1-3): ");
             
             int choice;
@@ -63,10 +62,10 @@ public class Report{
     }
 
     private void viewReport(){
-        System.out.println("|============================================================|");
-        System.out.println("|                VIEWING PATIENT AND BILL REPORTS            |");
-        System.out.println("|============================================================|");
-
+        System.out.println("\t\t\t\t\t\t\t\t ____________________________________________________________");
+        System.out.println("\t\t\t\t\t\t\t\t|                                                            |");
+        System.out.println("\t\t\t\t\t\t\t\t|                VIEWING PATIENT AND BILL REPORTS            |");
+        System.out.println("\t\t\t\t\t\t\t\t|____________________________________________________________|");
         String query = "SELECT p.patient_id, p.First_Name, p.Last_Name, p.Address, p.Contact_No, p.Age, p.Email, p.Gender, p.InOutStatus, "
                      + "b.billing_id, b.admission_date, b.discharge_date, b.treatment_type, "
                      + "b.total_bill_amount, b.payment_status "
@@ -75,10 +74,10 @@ public class Report{
         try (Connection conn = conf.connectDB();
              PreparedStatement pstmt = conn.prepareStatement(query);
              ResultSet rs = pstmt.executeQuery()) {
-
-            System.out.println("|======================================================================================================================================================================================================================================================================================|");
+            System.out.println(" ______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________");
+            System.out.println("|                                                                                                                                                                                                                                                                                      |");
             System.out.println("| PATIENT ID      |   FIRST NAME    |  LAST NAME      |     ADDRESS     | CONTACT NUMBER  |  AGE     |       EMAIL ACCOUNT        |  GENDER  | STATUS IN/OUT  |  BILLING ID  | ADMISSION DATE  |  DISCHARGE DATE | TREATMENT TYPE  |  TOTAL BILLS     |  PAYMENT STATUS PAID/UNPAID    |");
-            System.out.println("|======================================================================================================================================================================================================================================================================================|");
+            System.out.println("|______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________|");
 
             while (rs.next()) {
                 System.out.printf("| %-15d | %-15s | %-15s | %-15s | %-15s | %-8s | %-26s | %-8s | %-14s | %-12s | %-15s | %-15s | %-15s | %-16s | %-28s   |\n", 
@@ -98,13 +97,15 @@ public class Report{
                                   rs.getString("total_bill_amount"), 
                                   rs.getString("payment_status"));
             }
-            System.out.println("|======================================================================================================================================================================================================================================================================================|");
+            System.out.println("_______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________|");
 
         } catch (SQLException e) {
             System.err.println("ERROR TO GENERATE REPORTS MENU! : " + e.getMessage());
         }
     }
+    
     private void individualReport(){
+        Scanner sc = new Scanner (System.in);
         view1();
         int patient_id = -1;
         boolean validInput = false;
@@ -124,9 +125,10 @@ public class Report{
                     ResultSet rsPatient = patientStmt.executeQuery();
 
                     if (rsPatient.next()) {
-                        System.out.println("\t\t\t\t\t\t|========================================================|");
+                        System.out.println("\t\t\t\t\t\t ________________________________________________________");
+                        System.out.println("\t\t\t\t\t\t|                                                        |");
                         System.out.println("\t\t\t\t\t\t|          PATIENT INFO        |    PATIENT DETAILS      |");
-                        System.out.println("\t\t\t\t\t\t|========================================================|");
+                        System.out.println("\t\t\t\t\t\t|________________________________________________________|");
                         System.out.printf("\t\t\t\t\t\t| %-28s |%-25s|\n", "Patient ID:", rsPatient.getInt("patient_id"));
                         System.out.printf("\t\t\t\t\t\t| %-28s |%-25s|\n", "First Name:", rsPatient.getString("First_Name"));
                         System.out.printf("\t\t\t\t\t\t| %-28s |%-25s|\n", "Last Name:", rsPatient.getString("Last_Name"));
@@ -136,16 +138,17 @@ public class Report{
                         System.out.printf("\t\t\t\t\t\t| %-28s |%-25s|\n", "Email:", rsPatient.getString("Email"));
                         System.out.printf("\t\t\t\t\t\t| %-28s |%-25s|\n", "Gender:", rsPatient.getString("Gender"));
                         System.out.printf("\t\t\t\t\t\t| %-28s |%-25s|\n", "InOutStatus:", rsPatient.getString("InOutStatus"));
-                        System.out.println("\t\t\t\t\t\t|========================================================|");
-
-                        System.out.println("\t\t\t\t\t\t|========================================================|");
+                        System.out.println("\t\t\t\t\t\t|________________________________________________________|");
+                        System.out.println("\t\t\t\t\t\t                                                         ");
+                        System.out.println("\t\t\t\t\t\t ________________________________________________________ ");
+                        System.out.println("\t\t\t\t\t\t|                                                        |");
                         System.out.println("\t\t\t\t\t\t|                 BILLING INFORMATION                    |");
-                        System.out.println("\t\t\t\t\t\t|========================================================|");
-                        System.out.println("|===================================================================================================================================================|");
+                        System.out.println("\t\t\t\t\t\t|________________________________________________________|");
+                        System.out.println("___________________________________________________________________________________________________________________________________________________");
                         System.out.printf("|  %-20s| %-16s | %-15s | %-15s | %-15s | %-15s | %-18s      |\n", 
                                           "PATIENT NAME", "BILLING ID", "ADMISSION DATE", "DISCHARGE DATE", 
                                           "TREATMENT TYPE", "TOTAL BILLS", "PAYMENT STATUS PAID/UNPAID");
-                        System.out.println("|===================================================================================================================================================|");
+                        System.out.println("|___________________________________________________________________________________________________________________________________________________|");
 
                         try (PreparedStatement billingStmt = conn.prepareStatement(billingQuery)){
                             billingStmt.setInt(1, patient_id);
@@ -170,7 +173,7 @@ public class Report{
                                 System.out.println("| NO BILLING RECORDS FOUND FOR THIS PATIENT.                                                 |");
                             }
                         }
-                        System.out.println("|===================================================================================================================================================|");
+                       System.out.println("|___________________________________________________________________________________________________________________________________________________|");
 
                         validInput = true; 
                     } else {
@@ -185,4 +188,4 @@ public class Report{
             }
         }
     }
-    }
+  }

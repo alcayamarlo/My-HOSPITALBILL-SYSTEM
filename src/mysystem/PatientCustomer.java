@@ -12,24 +12,22 @@ public class PatientCustomer {
         
         do {
             
-            System.out.println("|============================================|");
+            System.out.println("|^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^|");
             System.out.println("|                                            |");
             System.out.println("|         PATIENTS MANAGEMENT SYSTEM         |");
             System.out.println("|                                            |");
-            System.out.println("|============================================|");
+            System.out.println("|____________________________________________|");
             System.out.println("|                                            |");
             System.out.println("|  1.            ADD PATIENT DETAILS         |");
             System.out.println("|                                            |");
             System.out.println("|  2.              VIEW DETAILS              |");
             System.out.println("|                                            |");
             System.out.println("|  3.             UPDATE DETAILS             |");
-            System.out.println("|                                            |");
+            System.out.println("|                                            |");          
             System.out.println("|  4.             DELETE DETAILS             |");
             System.out.println("|                                            |");
             System.out.println("|  5.                EXIT                    |");
-            System.out.println("|                                            |");
-            System.out.println("|============================================|");
-
+            System.out.println("|____________________________________________|");
             System.out.print("\tCHOOSE A NUMBER (1-5) :");
 
             int action = -1;
